@@ -6,22 +6,25 @@
  *    - Motor control
  *    - 
  */
+#include "encoder.h"
+
+#define ENC_A       A4
+#define ENC_B       A5
 #define RIGHT       0
 #define LEFT        1
 #define epsilon     150
 
 int PR[] = {A0, A1};
 int motor[] = { 10, 9 };
-
 int lastShade[] = {0, 0};
 
-#include "encoder.h"
+bool correcting = false;
 
 Encoder enc(ENC_A, ENC_B);
 
 void drive (int left, int right)  {
-  analogWrite(L_MOTOR, left);
-  analogWrite(R_MOTOR, right);   
+  analogWrite(motor[LEFT], left);
+  analogWrite(motor[RIGHT], right);   
 }
 
 void followLine() {
@@ -67,7 +70,7 @@ void setup() {
   enc.start();
 
   pinMode(8, OUTPUT);
-  digitalWrite(8, HIGH)
+  digitalWrite(8, HIGH);
   
   Serial.begin(9600); // set up communication
   pinMode(motor[RIGHT], OUTPUT);
