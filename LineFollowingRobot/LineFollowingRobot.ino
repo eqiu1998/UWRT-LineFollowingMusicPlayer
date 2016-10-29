@@ -30,6 +30,12 @@
 
 Encoder enc(ENC_A, ENC_B);
 
+void drive (int left, int right)  {
+  analogWrite(L_MOTOR, left);
+  analogWrite(R_MOTOR, right);   
+}
+
+
 void setup() {
   /* TO DO:  
    *  set output pins (controllers, speaker)
@@ -69,20 +75,12 @@ void setup() {
   TIMSK1 |= (1 << OCIE1A);
   
   Serial.begin(9600); // set up communication
-}
-
-ISR(TIMER0_COMPA_vect){  // Light Sensor Interrupt
-  
-}
-
-ISR(TIMER1_COMPA_vect){  // Encoder Interrupt
-  
+  pinMode(L_MOTOR, OUTPUT);
+  pinMode(R_MOTOR, OUTPUT);  
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
   Serial.println(enc.read()); // print encoder position for testing purposes.
 }
-
-
 
