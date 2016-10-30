@@ -12,7 +12,7 @@
 #define ENC_B       A5
 #define RIGHT       0
 #define LEFT        1
-#define epsilon     150
+#define epsilon     50
 
 int PR[] = {A0, A1};
 int motor[] = { 10, 9 };
@@ -28,28 +28,25 @@ void drive (int left, int right)  {
 }
 
 void followLine() {
-  Serial.write("encoder: ");
-  Serial.println(enc.read()); // print encoder position for testing purposes.
-
   int rShade = analogRead(PR[RIGHT]);
   int lShade = analogRead(PR[LEFT]);
 
   if (abs(lShade - rShade) < epsilon) {
-    drive(200, 200);
+    drive(255, 255);
     if (correcting) {
       correcting = false;
       Serial.write("back to equal speed");
     }
   }
   else if(lShade - rShade > epsilon) {
-    drive(200, 255);
+    drive(0, 255);
     if (!correcting) {
       Serial.write("R Full Speed");
       correcting = true;
     }
   }
   else if(rShade - lShade > epsilon) {
-    drive(255, 200);
+    drive(255, 0);
     if (!correcting) {
       Serial.write("L Full Speed");
       correcting = true;
@@ -76,7 +73,7 @@ void setup() {
   pinMode(motor[RIGHT], OUTPUT);
   pinMode(motor[LEFT], OUTPUT);  
 
-  drive(200, 200);
+  drive(255, 255);
 
   Serial.begin(9600);
 }
