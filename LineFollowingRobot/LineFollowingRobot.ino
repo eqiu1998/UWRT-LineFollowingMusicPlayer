@@ -57,9 +57,6 @@ void followLine() {
   Serial.print(lShade);
   Serial.write("\tR: ");
   Serial.print(rShade);
-  Serial.write("\tEncoder: ");
-  Serial.println(enc.read());
-
 }
 
 void setup() {
@@ -72,14 +69,13 @@ void setup() {
   Serial.begin(9600); // set up communication
   pinMode(motor[RIGHT], OUTPUT);
   pinMode(motor[LEFT], OUTPUT);  
-
-  drive(255, 255);
-
-  Serial.begin(9600);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
   followLine();
+
+  Serial.write("\tEncoder: ");
+  Serial.println(enc.read());
 }
 
