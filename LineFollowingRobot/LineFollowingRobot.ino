@@ -1,6 +1,4 @@
 
-#include "encoder.h"
-
 #define ENC_A         A4
 #define ENC_B         A5
 #define RIGHT         0
@@ -17,8 +15,6 @@ const int speedCtrlPins[N_SP_PRSETS] = { 2, 4, 7 };
 int speed = 0;  // robot will not move if no pins are set
 
 bool correcting = false;
-
-Encoder enc(ENC_A, ENC_B);
 
 void drive (int left, int right)  {
   analogWrite(motor[LEFT], left);
@@ -79,9 +75,6 @@ void setup() {
 
 void loop() {
   followLine();
-
-  Serial.write("\tEncoder: ");
-  Serial.print(enc.read());
   Serial.write("\tSpeed: ");
   Serial.println(speed);
 }
