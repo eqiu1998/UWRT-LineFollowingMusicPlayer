@@ -116,33 +116,30 @@ void setup()
 void loop()
 {
     int shade = analogRead(A0);
+    //Serial.println(analogRead(A0));
+      tword_m=pow(2,32)*dfreq/refclk;
+
 
     if (reference == 0) reference = shade / 10 * 10; // set reference shade, round to nearest 10
     
     // SET NOTE
-    if (reference - 90  <= shade && shade < reference - 54){
+    if (shade < reference - 434) {
+      curNote = G3;
+    }
+    if (reference - 310  <= shade && shade < reference - 186){
       curNote = C4;
     }
-    else if (reference - 54 <= shade && shade < reference - 18) {
+    else if (reference - 186 <= shade && shade < reference - 62) {
       curNote = D4;
     }
-    else if (reference - 18 <= shade && shade < reference + 18) {
+    else if (reference - 62 <= shade && shade < reference + 62) {
       curNote = E4;
     }
-    else if (reference + 18 <= shade && shade < reference + 54) {
+    else if (reference + 62 <= shade && shade < reference + 186) {
       curNote = F4;
     }
-    else if (reference + 54 <= shade && shade < reference + 90) {
+    else if (shade < reference + 310) {
       curNote = G4;
-    }
-    else if (reference + 90 <= shade && shade < reference + 126) {
-      curNote = A4;
-    }
-    else if (reference + 126 <= shade && shade < reference + 162) {
-      curNote = B5;
-    }
-    else if (reference + 162 <= shade && shade < reference + 198) {
-      curNote = C6;
     }
 
 //    if (curNote != lastNote) {
@@ -173,6 +170,7 @@ void Setup_timer2() {
     sbi (TCCR2A, WGM20);  // Mode 1  / Phase Correct PWM
     cbi (TCCR2A, WGM21);
     cbi (TCCR2B, WGM22);
+    
 }
 
 void Setup_timer1() {
@@ -193,7 +191,7 @@ void Setup_timer1() {
     sbi(TCCR1B, WGM12);
 
     // enable interrupts
-    sbi(TIMSK1, OCIE1A);
+    cbi(TIMSK1, OCIE1A);
 }
 //******************************************************************
 // Timer2 Interrupt Service at 31372,550 KHz = 32uSec
@@ -218,7 +216,6 @@ ISR(TIMER2_OVF_vect) {
 }
 
 ISR(TIMER1_COMPA_vect) {
-  tword_m=pow(2,32)*dfreq/refclk;
   int aaa = 0;
   while(aaa < 10000){
     __asm__("nop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\tnop\n\t"); 

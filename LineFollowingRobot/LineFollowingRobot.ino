@@ -1,11 +1,4 @@
-/* TO DO:
- *  Define pins
- *    - Left photoresistor
- *    - Right photoresistor
- *    - Encoder
- *    - Motor control
- *    - 
- */
+
 #include "encoder.h"
 
 #define ENC_A         A4
